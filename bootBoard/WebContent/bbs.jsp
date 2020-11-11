@@ -81,6 +81,7 @@
 				}
 				BbsDAO bbsDAO = new BbsDAO();
 				Vector<Bbs> list = bbsDAO.getList(pageNumber);
+				bbsDAO.connClose();
 				for (int i = 0; i < list.size(); i++) {
 				%>
 				<tr>
