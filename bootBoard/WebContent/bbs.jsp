@@ -81,7 +81,6 @@
 				}
 				BbsDAO bbsDAO = new BbsDAO();
 				Vector<Bbs> list = bbsDAO.getList(pageNumber);
-				bbsDAO.connClose();
 				for (int i = 0; i < list.size(); i++) {
 				%>
 				<tr>
@@ -108,8 +107,9 @@
 		<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"class="btn btn-success mr-1">다음</a>
 		<%
 			}
+			bbsDAO.connClose();
 		%>
-		<a href="write.jsp" class="btn btn-primary float-right<%=opt%>"id="writeBtn">글쓰기</a>
+		<a href="write.jsp" class="btn btn-primary float-right<%=opt%>" id="writeBtn">글쓰기</a>
 
 	</div>
 	<!-- Optional JavaScript-->
