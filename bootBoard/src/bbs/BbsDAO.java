@@ -101,11 +101,25 @@ public class BbsDAO {
 		}
 		return list;
 	}
+	public int bbsCnt() {
+		String sql = "SELECT COUNT(*) FROM bbs WHERE bbsId < ? AND bbsAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, getNext());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 	public boolean nextPage(int pageNumber) {
 		String sql = "SELECT * FROM bbs WHERE bbsId < ? AND bbsAvailable = 1";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, getNext() - (pageNumber - 2) * 10);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				return true;
@@ -115,4 +129,50 @@ public class BbsDAO {
 		}
 		return false;
 	}
+	public Bbs getBbs(int bbsId) {
+		String sql = "SELECT * FROM bbs WHERE bbsId = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bbsId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsId(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserId(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				return bbs;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public int update(int bbsId, String bbsTitle, String bbsContent) {
+		String sql = "UPDATE BBS SET bbsTitle = ?, bbsContent = ? WHERE bbsId = ?";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, bbsTitle);
+				pstmt.setString(2, bbsContent);
+				pstmt.setInt(3, bbsId);
+				return pstmt.executeUpdate();
+			} catch (SQLException e){
+				e.printStackTrace();
+			}
+		return -1; // 데이터베이스 오류 코드
+	}
+	public int delete(int bbsId) {
+		String sql = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsId = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bbsId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류 코드
+	}
+	
 }
