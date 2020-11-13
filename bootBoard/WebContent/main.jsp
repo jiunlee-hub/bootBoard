@@ -60,8 +60,13 @@
     		</div>
     	</nav>
     	<div class="container pt-3">
-    	<h2>메인페이지 입니다.</h2>
+    		<div class="jumbotron">
+    	<h2>웹 사이트 소개</h2>
+    	<p>이 웹사이트는 JSP로 제작한 웹 사이트입니다. 간단한 게시판의 기능을 구현하였습니다.
+    	디자인 템플릿으로는 부트 스트랩을 사용하였습니다.</p>
+    	<a class="btn btn-primary btn-lg" href="#" role="button">자세히 알아보기</a>
     	</div>
+    </div>
     <!-- Optional JavaScript-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
