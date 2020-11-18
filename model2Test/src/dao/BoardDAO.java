@@ -159,5 +159,24 @@ public class BoardDAO {
 		}
 		return insertCount;
 	}
+	//조회수 업데이트
+	public int updateReadCount(int board_num) {
+		
+		PreparedStatement pstmt = null;
+		int updateCount = 0;
+		String sql = "update board set BOARD_READCOUNT = +BOARD_READCOUNT + 1 where BOARD_NUM = ?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			updateCount = pstmt.executeUpdate();
+		} catch(Exception ex) {
+			System.out.println("setReadCountUpdate 에러 : " + ex);
+		}
+		finally {
+			if(pstmt != null) close(pstmt);
+		}
+		return updateCount;
+	}
 	
 }
