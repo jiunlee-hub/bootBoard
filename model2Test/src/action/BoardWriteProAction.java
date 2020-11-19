@@ -1,5 +1,7 @@
 package action;
 
+import static db.JdbcUtil.close;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
